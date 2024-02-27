@@ -52,9 +52,7 @@ public class DebugRenderersMod implements ModInitializer {
                     }
                 }
             }
-
         });
-
     }
 
 }

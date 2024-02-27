@@ -6,22 +6,20 @@ import dev.bithole.debugrenderers.mixin.MinecraftClientAccessor;
 import dev.bithole.debugrenderers.network.ClientPacketReceiver;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.hud.DebugHud;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoOverlay extends DrawableHelper {
+public class InfoOverlay {
 
     private final MinecraftClient client;
     private final TextRenderer textRenderer;
@@ -50,19 +48,19 @@ public class InfoOverlay extends DrawableHelper {
         this.lastKnownLatency = latency;
     }
 
-    public void render(MatrixStack matrices) {
+    public void render(DrawContext ctx) {
         this.client.getProfiler().push("infoOverlay");
-        renderLeftText(matrices);
+        renderLeftText(ctx);
         this.client.getProfiler().pop();
     }
 
-    private void renderLeftText(MatrixStack matrices) {
+    private void renderLeftText(DrawContext ctx) {
         List<String> lines = getLeftText();
         for(int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             int y = i * textRenderer.fontHeight + 2;
-            DebugHud.fill(matrices, 1, y - 1, textRenderer.getWidth(line) + 3, y + textRenderer.fontHeight - 1, 0x90505050);
-            textRenderer.draw(matrices, line, 2, y, 0xe0e0e0);
+            ctx.fill(1, y - 1, textRenderer.getWidth(line) + 3, y + textRenderer.fontHeight - 1, 0x90505050);
+            ctx.drawText(textRenderer, line, 2, y, 0xe0e0e0, false);
         }
     }
 

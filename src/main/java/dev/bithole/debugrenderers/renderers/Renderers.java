@@ -1,13 +1,10 @@
 package dev.bithole.debugrenderers.renderers;
 
-import dev.bithole.debugrenderers.DebugRenderersClientMod;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +31,18 @@ public class Renderers {
 
     public Set<DebugRenderer.Renderer> getRenderers() {
         return rendererNames.keySet();
+    }
+    public boolean getRendererStatus(DebugRenderer.Renderer renderer) {
+        return rendererStatus.get(renderer);
+    }
+
+    public DebugRenderer.Renderer getByName(String name) {
+        for (Map.Entry<DebugRenderer.Renderer, Text> entry : this.rendererNames.entrySet()) {
+            if (entry.getValue().getString().equals(name))
+                return entry.getKey();
+        }
+
+        return null;
     }
 
     public Text getName(DebugRenderer.Renderer renderer) {

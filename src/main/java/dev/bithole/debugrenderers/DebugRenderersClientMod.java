@@ -3,6 +3,7 @@ package dev.bithole.debugrenderers;
 import dev.bithole.debugrenderers.commands.PingCommand;
 import dev.bithole.debugrenderers.gui.InfoOverlay;
 import dev.bithole.debugrenderers.network.ClientPacketReceiver;
+import dev.bithole.debugrenderers.network.NetworkHelper;
 import dev.bithole.debugrenderers.renderers.Renderers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -44,6 +45,7 @@ public class DebugRenderersClientMod implements ClientModInitializer {
 
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
 			PingCommand.register(dispatcher);
+			NetworkHelper.DebugRenderersCommand.register(dispatcher);
 		});
 
 	}
